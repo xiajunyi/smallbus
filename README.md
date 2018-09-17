@@ -1,6 +1,12 @@
-# weapp-wechat-zhihu
+# smallbus
 
-微信中的知乎--微信小程序 demo // Zhihu in Wechat
+**修改自：微信中的知乎--微信小程序 demo **
+
+**代码部分主要修改了index目录相关内容，主要构造参考原README:**
+
+
+---
+
 
 ![](images/v_index.png)
 
