@@ -1,15 +1,18 @@
 <!--index.wxml-->
 <scroll-view scroll-y="true" class="container" bindscrolltoupper="search_stop_e" upper-threshold="10" lower-threshold="5" bindscrolltoupper="upper-back" bindscrolltolower="lower" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+
   <!--搜索框-->
   <view class="search flex-wrp">
     <view class="search-left flex-item">
       <image src="../../images/search.png"></image>
       <input placeholder="请输入公交线路名称)" id='xxx' placeholder-class="search-placeholder" bindinput="searchInput" />
-    </view>
-    <view class="search-right flex-item" bindtap="search_router_e">
-      <image src="../../images/lighting.png"></image>
+      <!-- 下拉框隐藏块 -->
+      <view class="select-stops {{stops.length > 0 ? 'select-show': 'select-hide'}}">
+        <view data-router="{{item}}" bindtap='search_router_e' class="select-stop-item" wx:for="{{stops}}">{{item}}</view>
+      </view>
     </view>
   </view>
+
   <!--方向切换-->
   <view class="flex-wrp">
     <view class="switch-left flex-item" bindtap="switch_router_e">
@@ -18,6 +21,7 @@
       <text class="oneline" decode="{{true}}">&nbsp; &nbsp;{{toStop}} </text>
     </view>
   </view>
+
   <!--明细显示-->
   <block wx:for="{{feed}}" wx:for-index="idx" wx:for-item="item" data-idx="{{idx}}">
     <view class="feed-item" data-detail_id="{{item.stop_id}}" bindtap="actualSearchTap">
@@ -33,7 +37,7 @@
       <view class="feed-content">
         <view class="question">
           <a class="question-link">
-            <text class = "stopname" decode="{{true}}">{{item.stop_name}}&nbsp; &nbsp; </text>
+            <text class="stopname" decode="{{true}}">{{item.stop_name}}&nbsp; &nbsp; </text>
           </a>
           <!--实时信息，只有在点击的时候才会显示-->
           <view class="stopDetail">
