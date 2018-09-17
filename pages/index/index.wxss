@@ -1,0 +1,81 @@
+/**index.wxss**/
+
+.container{
+  height: 1500rpx;
+}
+.container .stopname {
+  font-size: 35rpx;
+}
+.container .search{
+  width: 735rpx;
+  height: 65rpx;
+  padding: 12.5rpx 0 12.5rpx 15rpx;
+  background: #2A8CE5;
+}
+.container .search-left{
+  flex: 8;
+  background: #4EA3E7;
+  text-align: left;
+}
+.container .search-left input{
+  display: inline-block;
+  height: 65rpx;
+  font-size: 26rpx;
+}
+.search-placeholder{
+  color: #8CCEFD;
+  line-height: 20rpx;
+}
+.container .search .search-left image{
+  display: inline-block;
+  width: 35rpx;
+  height: 35rpx;
+  padding: 15rpx 15rpx 15rpx 20rpx;
+}
+.container .search .search-right{
+  flex: 1;
+}
+.container .search .search-right image{
+  width: 45rpx;
+  height: 45rpx;
+  padding: 10rpx;
+}
+
+.container{
+  padding: 0;
+  font-size: 14rpx;
+  background: #F0F4F3;
+  color: #000;
+}
+
+.container .switch-left{
+  padding-top: 10rpx;
+  height: 60rpx;
+  font-size: 45rpx;
+  text-align: left;
+  color: rgba(236, 112, 29, 0.863);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.container .switch-left image{
+  width: 45rpx;
+  height: 45rpx;
+  padding: 10rpx;
+}
+
+.container .stopDetail{
+  color: rgba(236, 112, 29, 0.863);
+}
+
+.container .oneline {
+    display: -webkit-box;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp:2;
+}
+/*feed-item part is in app.wxss for multiplexing*/

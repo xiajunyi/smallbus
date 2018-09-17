@@ -1,0 +1,59 @@
+<!--index.wxml-->
+<scroll-view scroll-y="true" class="container" bindscrolltoupper="search_stop_e" upper-threshold="10" lower-threshold="5" bindscrolltoupper="upper-back" bindscrolltolower="lower" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+  <!--搜索框-->
+  <view class="search flex-wrp">
+    <view class="search-left flex-item">
+      <image src="../../images/search.png"></image>
+      <input placeholder="请输入公交线路名称)" id='xxx' placeholder-class="search-placeholder" bindinput="searchInput" />
+    </view>
+    <view class="search-right flex-item" bindtap="search_router_e">
+      <image src="../../images/lighting.png"></image>
+    </view>
+  </view>
+  <!--方向切换-->
+  <view class="flex-wrp">
+    <view class="switch-left flex-item" bindtap="switch_router_e">
+      <text class="oneline" decode="{{true}}">{{fromStop}}&nbsp; &nbsp;</text>
+      <image src="../../images/jiantou.png"></image>
+      <text class="oneline" decode="{{true}}">&nbsp; &nbsp;{{toStop}} </text>
+    </view>
+  </view>
+  <!--明细显示-->
+  <block wx:for="{{feed}}" wx:for-index="idx" wx:for-item="item" data-idx="{{idx}}">
+    <view class="feed-item" data-detail_id="{{item.stop_id}}" bindtap="actualSearchTap">
+      <view class="feed-source">
+        <a class="">
+          <view class="avatar">
+            <image src="{{item.feed_source_img}}"></image>
+          </view>
+          <text>第{{item.stop_id}}站</text>
+        </a>
+        <image class="item-more" mode="aspectFit" src="../../images/more.png"></image>
+      </view>
+      <view class="feed-content">
+        <view class="question">
+          <a class="question-link">
+            <text class = "stopname" decode="{{true}}">{{item.stop_name}}&nbsp; &nbsp; </text>
+          </a>
+          <!--实时信息，只有在点击的时候才会显示-->
+          <view class="stopDetail">
+            <block wx:if="{{item.stop_id==search_stop_detail_touch+'.'}}">
+              <text decode="{{true}}">{{searchingInfo}}</text>
+            </block>
+
+            <block wx:if="{{item.stop_id==search_stop_detail+'.'}}">
+              <block wx:if="{{feedDetail.stop_interval==''}}">
+                <text decode="{{true}}">\n还没有发车</text>
+              </block>
+              <block wx:if="{{feedDetail.stop_interval!=''}}">
+                <text decode="{{true}}">\n还有：{{feedDetail.stop_interval}} 站&nbsp; &nbsp; </text>
+                <text decode="{{true}}">时间：{{feedDetail.time}} 分钟&nbsp; &nbsp; </text>
+                <text decode="{{true}}">距离：{{feedDetail.distance}} 米&nbsp; &nbsp; </text>
+              </block>
+            </block>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+</scroll-view>
