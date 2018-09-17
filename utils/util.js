@@ -30,7 +30,7 @@ function getData(router_name, direction){
   console.log("开始执行utils中的getData(router_name)");
   return new Promise(function(resolve, reject){
     wx.request({
-      url: 'https://bus.xiajunyi.com/bus/' + router_name +'路?direction='+direction,
+      url: 'https://bus.yangmenglin.com/bus/' + router_name +'?direction='+direction,
       data: {},
       header: {
         'Content-Type': 'application/json'
@@ -55,7 +55,7 @@ function getActualData(router_name, stop_id, direction) {
   console.log("开始执行utils中的getData(stop_id)");
   return new Promise(function (resolve, reject) {
     wx.request({
-      url: 'https://bus.xiajunyi.com/bus/'+ router_name+ '路/stop/' + stop_id+'?direction='+direction,
+      url: 'https://bus.yangmenglin.com/bus/'+ router_name+ '/stop/' + stop_id+'?direction='+direction,
       data: {},
       header: {
         'Content-Type': 'application/json'
@@ -90,9 +90,57 @@ function discoveryNext(){
   return discovery_next.next;
 }
 
+//获取公交站点信息
+function getData(router_name, direction) {
+  console.log("开始执行utils中的getData(router_name)");
+  return new Promise(function (resolve, reject) {
+    wx.request({
+      url: 'https://bus.yangmenglin.com/bus/' + router_name + '?direction=' + direction,
+      data: {},
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        console.log("success");
+        console.log("我收到了返回的数据");
+        console.log(res.data);
+        resolve(res);
+      },
+      fail: function (res) {
+        reject(res);
+        console.log("failed");
+      }
 
+    })
+  })
+}
+
+//获取实时到站信息
+function getActualData(router_name, stop_id, direction) {
+  console.log("开始执行utils中的getData(stop_id)");
+  return new Promise(function (resolve, reject) {
+    wx.request({
+      url: 'https://bus.yangmenglin.com/bus/' + router_name + '/stop/' + stop_id + '?direction=' + direction,
+      data: {},
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        console.log("success");
+        console.log("我收到了返回的数据");
+        console.log(res.data);
+        resolve(res);
+      },
+      fail: function (res) {
+        reject(res);
+        console.log("failed");
+      }
+    })
+  })
+}
 
 module.exports.getData = getData;
+module.exports.getActualData = getActualData;
 module.exports.getData2 = getData2;
 module.exports.getNext = getNext;
 module.exports.getDiscovery = getDiscovery;

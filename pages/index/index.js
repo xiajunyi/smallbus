@@ -8,7 +8,7 @@ Page({
     feed: [1],
     feedDetail: [1],
     feed_length: 0,
-    router_name: 993,
+    router_name: '993路',
     search_stop_detail_touch: 100,
     search_stop_detail: 100,
     direction:1,
@@ -110,15 +110,15 @@ Page({
   searchInput: function (e) {
     console.log('输入了新的线路。。。。。');
     var str = e.detail.value;
-    if (str.lastIndexOf('路')!=-1){
-      str = str.substr(0, str.length - 1);
+    if (str.lastIndexOf('线') == -1 && str.lastIndexOf('路')==-1){
+      str = str+'路';
     }
     console.log(str);
-
+    
     this.setData({
       router_name: str
     })
-    console.log(this.data.router_name);
+    console.log('传入的路线值是---：' + this.data.router_name);
 
   },
   //搜索按钮的触发事件
