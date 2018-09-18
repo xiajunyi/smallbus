@@ -1,226 +1,136 @@
 //index.js
+var stations = require('../../data/stations.js')
+var api = require('../../utils/api.js')
+var { request } = require('../../utils/request.js')
 
-var util = require('../../utils/util.js')
-var app = getApp()
-var router_name
 Page({
   data: {
-    feed: [1],
-    feedDetail: [1],
-    feed_length: 0,
-    router_name: '993路',
-    search_stop_detail_touch: 100,
-    search_stop_detail: 100,
-    direction:1,
-    fromStop:'',
-    toStop:'',
-    searchingInfo:''
+    direction: 1,     // 路线方向，0 和 1，默认为 1
+    routeDetail: {},  // 路线详情
+    stopDetail: {},   // 站点详情
+    route: '',        // 路线名称
+    stops: [],        // 搜索下拉框存储满足条件的路线数组
   },
-  //事件处理函数
-  bindItemTap: function() {
-    wx.navigateTo({
-      url: '../answer/answer'
-    })
-  },
-  bindQueTap: function() {
-    wx.navigateTo({
-      url: '../question/question'
-    })
-  },
+
   onLoad: function () {
-    console.log('现在在执行onLoad')
-    //var that = this
-    //调用应用实例的方法获取全局数据
-    this.getData();
+    // this.getData();
+    // this.handleSearchRoute({ currentTarget: { dataset: { router: '993路' } } })
   },
-  upper: function () {
-    wx.showNavigationBarLoading()
-    //this.refresh();
-    this.getData();
-    console.log("router_name");
-    setTimeout(function () { wx.hideNavigationBarLoading(); wx.stopPullDownRefresh(); }, 2000);
-  },
-  lower: function (e) {
-    wx.showNavigationBarLoading();
-    var that = this;
-    setTimeout(function () { wx.hideNavigationBarLoading(); wx.stopPullDownRefresh();}, 2000);
-    console.log("lower");
-  },
-  //scroll: function (e) {
-  //  console.log("scroll")
-  //},
 
-  //网络请求数据, 实现首页刷新
-  refresh0: function(){
-    var index_api = '';
-    util.getData(index_api)
-        .then(function(data){
-          //this.setData({
-          //
-          //});
-          console.log(data);
-        });
-  },
-  refresh: function(){
-    console.log("现在在执行index中的refresh()方法");
-    wx.showToast({
-      title: '刷新中',
-      icon: 'loading',
-      duration: 3000
-    });
-    var feed = util.getData2();
-    console.log("loaddata");
-    var feed_data = feed.data;
-    this.setData({
-      feed:feed_data,
-      feed_length: feed_data.length
-    });
-    setTimeout(function(){
-      wx.showToast({
-        title: '刷新成功',
-        icon: 'success',
-        duration: 2000
-      })
-    },3000)
+  /**
+   * edit by dkvirus:
+   * 处理文本框的值，过滤所有路线中包含文本框输入值得选项作为下拉框的数据源
+   */
+  handleSelect: function (e) {
+    var str = e.detail.value;   // 输入框的值
 
-  },
-  //使用本地 fake 数据实现继续加载效果
-  nextLoad: function(){
-    wx.showToast({
-      title: '加载中',
-      icon: 'loading',
-      duration: 4000
-    })
-    var next = util.getNext();
-    console.log("continueload");
-    var next_data = next.data;
-    this.setData({
-      feed: this.data.feed.concat(next_data),
-      feed_length: this.data.feed_length + next_data.length
-    });
-    setTimeout(function(){
-      wx.showToast({
-        title: '加载成功',
-        icon: 'success',
-        duration: 2000
-      })
-    },3000)
-  },
-//绑定搜索线路的值获取
-  searchInput: function (e) {
-    console.log('输入了新的线路。。。。。');
-    var str = e.detail.value;
-    if (str.lastIndexOf('线') == -1 && str.lastIndexOf('路')==-1){
-      str = str+'路';
+    if (str === '') {
+      this.setData({ stops: [] })
+    } else {
+      var filters = stations.filter(item => item.indexOf(str.trim()) !== -1)
+      this.setData({ stops: filters })
     }
-    console.log(str);
-    
-    this.setData({
-      router_name: str
-    })
-    console.log('传入的路线值是---：' + this.data.router_name);
+  },
 
-  },
-  //搜索按钮的触发事件
-  search_router_e: function (e) {
+  /**
+   * edit by dkvirus:
+   * 选择下拉框中的路线，去后台查询该路线详细数据
+   */
+  handleSearchRoute: function (e) {
+    var that = this
+    var router_name = e.currentTarget.dataset.router    // 要查询的路线
     wx.showNavigationBarLoading()
-    //this.refresh();
-    console.log('输入了新的线路');
-    console.log(this.data.router_name);
-    this.getData();
-    console.log("upper");
-    setTimeout(function () { wx.hideNavigationBarLoading(); wx.stopPullDownRefresh(); }, 3000);
-  },
-  //搜索按钮的触发事件
-  switch_router_e: function (e) {
-    wx.showNavigationBarLoading()
-    //this.refresh();
-    console.log('开始切换方向');
-    console.log(this.data.direction);
-    this.getSwitchData();
-    setTimeout(function () { wx.hideNavigationBarLoading(); wx.stopPullDownRefresh(); }, 3000);
-  },
-//获取点击的实时站点号
-  actualSearchTap: function(e) {
-   console.log("下面是实时站点号");
-   var str = e.currentTarget.dataset.detail_id;
-    var actualStop = str.substring(0, str.length - 1);
-    this.setData({
-      search_stop_detail_touch: actualStop
-    });
-    this.getActualData(actualStop);
-   //setTimeout(function () { wx.hideNavigationBarLoading(); wx.stopPullDownRefresh(); }, 2000);
- },
-  //执行线路信息查询
-  getData: function () {
-    console.log("现在在执行index里的getData()方法1?");
-    console.log(this.data.router_name);
-    this.setData({
-      feed: '我是feed',
-      feed_length: '我是feed_length'
-    });
-    console.log(this.data.feed);
-    var that = this;
-    util.getData(this.data.router_name, this.data.direction).then(function (res) {
+
+    request({
+      url: api.ROUTE,
+      data: { router_name, direction: 1 },
+    }).then(function (res) {
       //请求成功的操作
-      console.log("请求现在是同步返回的吗？");
-      console.log(res.data);      
       that.setData({
-        feed: res.data.stops,
-        feed_length: res.data.stops.length,
-        fromStop: res.data.from,
-        toStop: res.data.to
+        route: router_name, 
+        routeDetail: res.data,
+        stops: [],     // 置空下拉框数组
       });
-    });
+      wx.hideNavigationBarLoading();
+      wx.setNavigationBarTitle({ title: router_name })   // 设置页面标题为当前公交路线名称
+    })
   },
-  //切换方向
-  //执行线路信息查询
-  getSwitchData: function () {
-    console.log("现在在执行index里的getData()方法1?");
-    console.log(this.data.router_name);
-    this.setData({
-      feed: '我是feed',
-      feed_length: '我是feed_length',
-      direction: (this.data.direction+1)%2
-    });
-    console.log(this.data.feed);
-    var that = this;
-    util.getData(this.data.router_name, this.data.direction).then(function (res) {
+
+  /**
+   * edit by dkvirus at 2018年09月18日11:27:34
+   * 查询站点详细信息：距离所选站点距离、还有多久时间抵达...
+   * note: 注意要带方向查询
+   */
+  handleSearchStop: function (e) {
+    var that = this
+    var stop_id = e.currentTarget.dataset.stopid     // 需要查询的站点 Id
+    var direction = this.data.direction
+    var router_name = this.data.route
+    wx.showLoading()
+
+    request({
+      url: api.STOP,
+      data: { router_name, direction, stop_id },
+    }).then(function (res) {
+      var stopDetail = res.data
+      stopDetail.time = that.handleTime(stopDetail.time)
+
       //请求成功的操作
-      console.log("请求现在是同步返回的吗？");
-      console.log(res.data);
-      that.setData({
-        feed: res.data.stops,
-        feed_length: res.data.stops.length,
-        fromStop:res.data.from,
-        toStop:res.data.to
-      });
-    });
+      that.setData({ stopDetail });
+      wx.hideLoading();
+    })
   },
-  //获取实时的到站信息
-  getActualData: function (actualStop) {
-    console.log("现在在执行index里的getData()方法1?");
-    console.log(this.data.search_stop_detail);
-    console.log(this.data.feed);
-    console.log("正在载入实时信息");
-    this.setData({
-      searchingInfo: '正在拼命加载实时信息  ~~~'
-    });
-    var that = this;
-    util.getActualData(this.data.router_name, actualStop, this.data.direction).then(function (res) {
+
+  /**
+   * edit by dkvirus at 2018年09月18日15:05:15
+   * 查询公交反向路线
+   */
+  handleDirection: function () {
+    var that = this
+    var router_name = this.data.route    // 要查询的路线
+    var direction = this.data.direction
+    wx.showLoading()
+
+    // 处理方向，当前是0则取1，当前是1则取0
+    direction = Number(!Boolean(direction))
+
+    request({
+      url: api.ROUTE,
+      data: { router_name, direction },
+    }).then(function (res) {
       //请求成功的操作
-      console.log("详细请求现在是同步返回的吗？");
-      console.log(res.data);
-      console.log("详细现在请求的站点编号是" + actualStop);
-      var parseData = res.data;
-      parseData.time = parseInt(parseData.time / 60);
       that.setData({
-        search_stop_detail: actualStop,
-        feedDetail: parseData,
-        searchingInfo: ''
+        route: router_name,
+        routeDetail: res.data,
+        direction,
+        stopDetail: {},
       });
-      console.log("间隔为");
-      console.log(that.data.feedDetail.stop_interval);
-    });
+      wx.hideLoading();
+    })
+  },
+
+  /**
+   * edit by dkvirus at 2018年09月18日15:11:48
+   * 后台传过来的时间以秒为单位，展示不友好，处理结果：
+   * 20    =>   20秒     
+   * 140   =>   2分钟20秒
+   * 4000  =>   1小时6分钟40秒
+   */
+  handleTime (second) {
+    var hour, min, sec
+
+    if (second < 60) {
+      return `${second}秒`
+    } else if (second < 3600) {
+      min = Math.floor(second / 60)
+      sec = second % 60
+      return `${min}分钟${sec}秒`
+    } else {
+      hour = Math.floor(second / 3600)
+      min = Math.floor(second % 3600 / 60)
+      sec = second % 3600 % 60
+      return `${hour}小时${min}分钟${sec}秒`
+    }
+
   },
 })

@@ -1,81 +1,203 @@
 /**index.wxss**/
 
-.container{
-  height: 1500rpx;
+.index{
+  height: 100vh;
+  padding: 0;
+  background: #F0F4F3;
+  color: #333;
+  font-size: 24rpx;
 }
-.container .stopname {
-  font-size: 35rpx;
-}
-.container .search{
-  width: 735rpx;
-  height: 65rpx;
-  padding: 12.5rpx 0 12.5rpx 15rpx;
+
+/* 搜索 */
+.search{
+  width: 100%;
+  box-sizing: border-box;
+  height: 130rpx;
+  padding: 20rpx;
+  position: relative;
   background: #2A8CE5;
 }
-.container .search-left{
-  flex: 8;
-  background: #4EA3E7;
-  text-align: left;
+.search image {
+  width: 40rpx;
+  height: 40rpx;
+  position: absolute;
+  left: 30rpx;
+  top: 20px;
 }
-.container .search-left input{
+.search input{
   display: inline-block;
-  height: 65rpx;
+  background: #4EA3E7;
+  border-radius: 5px;
+  padding-left: 60rpx;
+  width: 90%;
+  height: 80rpx;
   font-size: 26rpx;
+  color: #fff;
+  margin-top: 10rpx;
 }
 .search-placeholder{
   color: #8CCEFD;
   line-height: 20rpx;
 }
-.container .search .search-left image{
-  display: inline-block;
-  width: 35rpx;
-  height: 35rpx;
-  padding: 15rpx 15rpx 15rpx 20rpx;
+
+/* add by dkvirus: 添加下拉框样式 */
+.search .select-stops {
+  font-size: 30rpx; 
+  background: #4EA3E7;
+  color: #fff;
+  padding: 20rpx; 
+  position: relative; 
+  border-radius: 10rpx;
+  z-index: 100; 
+  width: 90%;
+  max-height: 400rpx; 
+  overflow: auto;
 }
-.container .search .search-right{
-  flex: 1;
+.search .select-stop-item {
+  border-bottom: 1px solid #fff; 
+  padding: 20rpx;
 }
-.container .search .search-right image{
+.search .select-stop-item:last-child {
+  border-bottom: none;
+}
+.search .select-show {
+  display: block;
+}
+.search .select-hide {
+  display: none;
+}
+/* end */
+
+/* 路线详情 */
+.detail {
+  width: 90%;
+  border-radius: 5px;
+  background-color: #fff;
+  margin: 20rpx auto 20rpx;
+  font-size: 30rpx;
+  padding: 20rpx;
+}
+.detail image {
   width: 45rpx;
   height: 45rpx;
+  align-self: center;
   padding: 10rpx;
 }
-
-.container{
-  padding: 0;
-  font-size: 14rpx;
-  background: #F0F4F3;
-  color: #000;
-}
-
-.container .switch-left{
-  padding-top: 10rpx;
-  height: 60rpx;
+.detail .stop {
+  width: 45%;
+  text-align: center;
   font-size: 45rpx;
-  text-align: left;
   color: rgba(236, 112, 29, 0.863);
+  word-break: break-all;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp:2;
+}
+.detail .time {
+  color: #888;
+  padding: 30rpx;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
+}
+.detail .tip {
+  color: #888;
+  padding-left: 30rpx;
 }
 
-.container .switch-left image{
+/* 站点详情 */
+.stop {
+  width: 90%;
+  padding: 20rpx;
+  border-radius: 5px;
+  background-color: #fff;
+  margin: 0 auto;
+  max-height: 50%;
+  overflow: auto;
+}
+.stop .item {
+  width: 100%;
+  line-height: 100rpx;
+  font-size: 30rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  padding-right: 40rpx;
+  height: 100rpx;
+}
+.stop .item .arrow {
+  width: 10%;
+  height: 100%;
+  text-align: center;
+  position: relative;
+}
+.stop .item .arrow .line {
+  width: 6rpx;
+  height: 100%;
+  background: #888;
+  position: absolute;
+  left: 50%;
+
+}
+.stop .item .arrow .dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background: #888;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -6rpx;
+  margin-top: -6rpx;
+}
+
+.stop .item .number {
+  width: 10%;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.stop .item .number .circle {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  background: #888;
+  color: #fff;
+  line-height: 60rpx;
+}
+
+.stop .item .stopname {
+  flex: 1;
+  height: 100%;
+  padding-left: 40rpx;
+  color: #888;
+}
+
+.stop .item image {
   width: 45rpx;
   height: 45rpx;
   padding: 10rpx;
 }
 
-.container .stopDetail{
-  color: rgba(236, 112, 29, 0.863);
+/* 首页推荐路线 */
+.recommend {
+  width: 100%;
+  margin-top: 40rpx;
 }
-
-.container .oneline {
-    display: -webkit-box;
-    word-break: break-all;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp:2;
+.recommend-item {
+  width: 90%;
+  height: 200rpx;
+  box-sizing: border-box;
+  padding: 40rpx;
+  background: #fff;
+  font-size: 40rpx;
+  color: #888;
+  box-shadow: 10rpx 8rpx 4rpx #ccc;
+  border-radius: 10rpx;
+  margin: 30rpx auto;
 }
-/*feed-item part is in app.wxss for multiplexing*/
