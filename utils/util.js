@@ -30,7 +30,7 @@ function getData(router_name, direction = 0){
   console.log("开始执行utils中的getData(router_name)");
   return new Promise(function(resolve, reject){
     wx.request({
-      url: 'http://bus.yangmenglin.com/bus/' + router_name +'?direction='+direction,
+      url: 'https://bus.yangmenglin.com/bus/' + router_name +'?direction='+direction,
       data: {},
       header: {
         'Content-Type': 'application/json'
@@ -55,7 +55,7 @@ function getActualData(router_name, stop_id, direction) {
   console.log("开始执行utils中的getData(stop_id)");
   return new Promise(function (resolve, reject) {
     wx.request({
-      url: 'http://bus.yangmenglin.com/bus/'+ router_name+ '路/stop/' + stop_id+'?direction='+direction,
+      url: 'https://bus.yangmenglin.com/bus/'+ router_name+ '/stop/' + stop_id+'?direction='+direction,
       data: {},
       header: {
         'Content-Type': 'application/json'
