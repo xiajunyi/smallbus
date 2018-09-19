@@ -36,24 +36,25 @@
 
   <!-- 站点详情 -->
   <view class='stop' wx:if="{{routeDetail.stops}}">
-    <view class="item" wx:for="{{routeDetail.stops}}" wx:key="{{item.stop_id}}"
-      bindtap='handleSearchStop' data-stopId='{{item.stop_id}}'>
-      <view class='arrow'>
-        <view class='line'></view>
-        <view class='dot'></view>
+    <scroll-view scroll-y style="height: 600rpx;">
+      <view class="item" wx:for="{{routeDetail.stops}}" wx:key="{{item.stop_id}}"
+        bindtap='handleSearchStop' data-stopId='{{item.stop_id}}'>
+        <view class='arrow'>
+          <view class='line'></view>
+          <view class='dot'></view>
+        </view>
+        <view class="number">
+          <view class="circle {{selectedStop === item.stop_id ? 'active-number': ''}}">{{index + 1}}</view>
+        </view>
+        <view class="stopname {{selectedStop === item.stop_id ? 'active-name': ''}}">
+          {{item.stop_name}}
+        </view>
+        <image class="item-more" mode="aspectFit" src="../../images/more.png"></image>
       </view>
-      <view class='number'>
-        <view class='circle'>{{index + 1}}</view>
-      </view>
-      <view class='stopname'>
-        {{item.stop_name}}
-      </view>
-      <image class="item-more" mode="aspectFit" src="../../images/more.png"></image>
-    </view>
+    </scroll-view>
   </view>
 
-  
-
+  <!-- 推荐路线 -->
   <view class='recommend' wx:if="{{!route}}">
     <view style='margin: 40rpx;color: #888; font-size:34rpx;'>推荐路线</view>
     <view class="recommend-item" bindtap='handleSearchRoute' data-router="{{item}}"
