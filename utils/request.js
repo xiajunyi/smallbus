@@ -5,7 +5,7 @@
 function request (opts) {
   if (!opts.url) return;
   opts.method = opts.method || 'GET'
-  var { url, data } = handleParam(opts);
+  var { url, data } = handleParam(opts)
 
   return new Promise(function (resolve, reject) {
     wx.request({
@@ -35,7 +35,7 @@ function handleParam (opts) {
   urlArr = urlArr.map(item => {
     if (item.charAt(0) === ':') {
       var field = String(item).substring(1)
-      item = data[field]
+      item = encodeURIComponent(data[field])
       delete data[field]
     }
     return item
