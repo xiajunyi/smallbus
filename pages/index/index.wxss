@@ -113,8 +113,6 @@
   border-radius: 5px;
   background-color: #fff;
   margin: 0 auto;
-  max-height: 50%;
-  overflow: auto;
 }
 .stop .item {
   width: 100%;
@@ -176,6 +174,14 @@
   height: 100%;
   padding-left: 40rpx;
   color: #888;
+}
+.stop .item .active-name {
+  color: #2A8CE5!important;
+  font-size: 36rpx;
+}
+.stop .item .active-number {
+  color: #2A8CE5!important;
+  background: #8CCEFD!important;
 }
 
 .stop .item image {

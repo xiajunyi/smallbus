@@ -10,11 +10,7 @@ Page({
     stopDetail: {},   // 站点详情
     route: '',        // 路线名称
     stops: [],        // 搜索下拉框存储满足条件的路线数组
-  },
-
-  onLoad: function () {
-    // this.getData();
-    // this.handleSearchRoute({ currentTarget: { dataset: { router: '993路' } } })
+    selectedStop: '', // 被选中站点高亮显示
   },
 
   /**
@@ -50,6 +46,7 @@ Page({
         route: router_name, 
         routeDetail: res.data,
         stops: [],     // 置空下拉框数组
+        selectedStop: '',
       });
       wx.hideNavigationBarLoading();
       wx.setNavigationBarTitle({ title: router_name })   // 设置页面标题为当前公交路线名称
@@ -76,7 +73,7 @@ Page({
       stopDetail.time = that.handleTime(stopDetail.time)
 
       //请求成功的操作
-      that.setData({ stopDetail });
+      that.setData({ stopDetail, selectedStop: stop_id });
       wx.hideLoading();
     })
   },
@@ -104,6 +101,7 @@ Page({
         routeDetail: res.data,
         direction,
         stopDetail: {},
+        selectedStop: '',
       });
       wx.hideLoading();
     })
@@ -131,6 +129,5 @@ Page({
       sec = second % 3600 % 60
       return `${hour}小时${min}分钟${sec}秒`
     }
-
   },
 })
