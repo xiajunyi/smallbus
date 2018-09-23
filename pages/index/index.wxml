@@ -5,9 +5,9 @@
 
   <!-- 推荐路线 -->
   <view class='recommend'>
-    <view style='margin: 40rpx;color: #888; font-size:34rpx;'>推荐路线</view>
+    <view style='margin: 40rpx;color: #888; font-size:34rpx;'>历史查询路线</view>
     <view class="recommend-item" bindtap='handleSearchRoute' data-router="{{item}}"
-      wx:for="{{['993路', '991路', '浦东32路']}}" wx:key="{{item}}">
+      wx:for="{{history}}" wx:key="{{item}}">
       {{item}}
     </view>
   </view>

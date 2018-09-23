@@ -1,6 +1,9 @@
 var api = require('../../utils/api.js')
 var { request } = require('../../utils/request.js')
 
+wx.cloud.init({ traceUser: true })
+var db = wx.cloud.database()
+
 Page({
 
   /**
@@ -13,13 +16,14 @@ Page({
     route: '',        // 路线名称
     stops: [],        // 搜索下拉框存储满足条件的路线数组
     selectedStop: '', // 被选中站点高亮显示
+    record: 1,        // 是否记录，1 记录，0 不记录
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({ route: options.route })
+    this.setData({ route: options.route, record: Number(options.record) })
   },
 
   /**
@@ -28,6 +32,7 @@ Page({
   onShow: function () {
     var that = this
     var router_name = this.data.route
+    var record = this.data.record
 
     request({
       url: api.ROUTE,
@@ -39,6 +44,12 @@ Page({
         stops: [],     // 置空下拉框数组
         selectedStop: '',
       });
+
+      // 插入历史记录表中
+      if (record) {
+        that.dbInsertHistory({ route: router_name })
+      }
+
       wx.setNavigationBarTitle({ title: router_name })   // 设置页面标题为当前公交路线名称
     })
   },
@@ -60,8 +71,13 @@ Page({
         route: router_name,
         routeDetail: res.data,
         stops: [],     // 置空下拉框数组
+        record: 1,
         selectedStop: '',
       });
+
+      // 插入历史记录表中
+      that.dbInsertHistory({ route: router_name })
+
       wx.setNavigationBarTitle({ title: router_name })   // 设置页面标题为当前公交路线名称
     })
   },
@@ -141,5 +157,22 @@ Page({
       sec = second % 3600 % 60
       return `${hour}小时${min}分钟${sec}秒`
     }
+  },
+
+  /**
+   * edit by dkvirus at 2018年09月23日23:04:31
+   * 插入历史记录表中
+   */
+  dbInsertHistory: function (options) {
+    db.collection('bus_history')
+      .add({
+        data: {
+          route: options.route,
+          createAt: new Date(),
+        }
+      })
+      .then(res => {
+        console.log(res)
+      })
   },
 })
