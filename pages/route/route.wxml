@@ -1,0 +1,48 @@
+<!--index.wxml-->
+<view class="index">
+  <!--搜索框-->
+  <search route="{{route}}" stops="{{stops}}" bindselect="handleSearchRoute"></search>  
+
+  <!--路线详情-->
+  <view class="detail" wx:if="{{routeDetail.to}}">
+    <view style='display: flex;' bindtap='handleDirection'>
+      <text class='stop'>{{routeDetail.from}}</text>
+      <image src="../../images/jiantou.png"></image>
+      <text class='stop'>{{routeDetail.to}}</text>
+    </view>
+    <view class="time">
+      <view>首班发车时间：{{routeDetail.start_at}}</view>
+      <view>末班发车时间：{{routeDetail.end_at}}</view>
+    </view>
+    <view class='tip' wx:if="{{stopDetail.status}}">
+      <view wx:if="{{stopDetail.status === 'running'}}">
+        距离 {{stopDetail.router_name}} 
+        还有：{{stopDetail.stop_interval}}站 
+        时间：{{stopDetail.time}}
+      </view>
+      <view wx:if="{{stopDetail.status === 'waiting'}}">
+        友情提示：最近一班公交已离开本站，新一班公交还未发车。
+      </view>
+    </view>
+  </view>
+
+  <!-- 站点详情 -->
+  <view class='stop' wx:if="{{routeDetail.stops}}">
+    <scroll-view scroll-y style="height: 700rpx;">
+      <view class="item" wx:for="{{routeDetail.stops}}" wx:key="{{item.stop_id}}"
+        bindtap='handleSearchStop' data-stopId='{{item.stop_id}}'>
+        <view class='arrow'>
+          <view class='line'></view>
+          <view class='dot'></view>
+        </view>
+        <view class="number">
+          <view class="circle {{selectedStop === item.stop_id ? 'active-number': ''}}">{{index + 1}}</view>
+        </view>
+        <view class="stopname {{selectedStop === item.stop_id ? 'active-name': ''}}">
+          {{item.stop_name}}
+        </view>
+        <image class="item-more" mode="aspectFit" src="../../images/more.png"></image>
+      </view>
+    </scroll-view>
+  </view>
+</view>

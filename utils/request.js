@@ -3,6 +3,8 @@
  * 封装 wx 原生请求方法，统一打印响应日志
  */
 function request (opts) {
+  wx.showNavigationBarLoading()
+  wx.showLoading()
   if (!opts.url) return;
   opts.method = opts.method || 'GET'
   var { url, data } = handleParam(opts)
@@ -14,10 +16,14 @@ function request (opts) {
       method: opts.method,
       success: function (res) {
         console.log(`请求【${opts.method} ${url}】成功，响应数据：%o`, res)
+        wx.hideNavigationBarLoading();
+        wx.hideLoading();
         resolve(res)
       },
       fail: function (res) {
         console.log(`请求【${opts.method} ${url}】失败，响应数据：%o`, res)
+        wx.hideNavigationBarLoading();
+        wx.hideLoading();
         reject(res)
       },
     })
