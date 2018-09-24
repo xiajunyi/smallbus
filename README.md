@@ -8,7 +8,7 @@
 
 >+ 然后：经过无数次debug和google后，终于发布了第一版，还激动的写了一篇博客,名叫[《公交查询微信小程序的实现》](http://www.xiajunyi.com/pages/p50.html#more)。
 
->+ 后来：我的好友[@DarkKille](https://github.com/DarkKille)这位前端高手加入了我的小项目，开始帮助我。值得一提的是，他只用了一天时间就优化了我很多代码里的low逼方法，还让smallbus的界面变的稍微高档起来。
+>+ 直到：我的好友[@DarkKille](https://github.com/DarkKille)这位前端高手加入了我的小项目，开始帮助我。值得一提的是，他只用了一天时间就优化了我很多代码里的low逼方法，还让smallbus的界面变的稍微高档起来。
 
 >+ 现在：我们开始利用业余时间逐步推进smallbus界面和功能的优化，希望最终能做出一个真正实用且方便大家的公交查询小程序。
 
