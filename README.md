@@ -31,7 +31,7 @@
 
 
 
-## demo
+## DEMO
 感兴趣的话可以关注我们已发布的小程序
 ![img](http://www.xiajunyi.com/img/xjy/p50004.png)
 
