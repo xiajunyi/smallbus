@@ -1,0 +1,8 @@
+<view class="search">
+    <image src="../../images/search.png"></image>
+    <input placeholder="请输入公交线路名称，如：993路" placeholder-class="search-placeholder" bindinput="handleSelect" value="{{route}}" />
+    <!-- 下拉框隐藏块 -->
+    <view class="select-stops {{stops.length > 0 ? 'select-show': 'select-hide'}}">
+      <view data-router="{{item}}" bindtap='handleSearchRoute' class="select-stop-item" wx:for="{{stops}}" wx:key="{{item}}">{{item}}</view>
+    </view>
+</view>

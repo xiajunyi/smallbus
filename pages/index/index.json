@@ -2,5 +2,8 @@
   "backgroundTextStyle": "dark",
   "window": {
     "enablePullDownRefresh": true
+  },
+  "usingComponents": {
+    "search": "../../components/search/search"
   }
 }

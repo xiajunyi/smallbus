@@ -1,6 +1,7 @@
 {
   "pages":[
     "pages/index/index",
+    "pages/route/route",
     "pages/discovery/discovery",
     "pages/notify/notify",
     "pages/chat/chat",
@@ -51,5 +52,6 @@
     "request": 10000,
     "downloadFile": 10000
   },
-  "debug": true
+  "debug": true,
+  "cloud": true
 }

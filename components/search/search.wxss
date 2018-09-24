@@ -1,0 +1,59 @@
+/* 搜索 */
+.search{
+  width: 100%;
+  box-sizing: border-box;
+  height: 130rpx;
+  padding: 20rpx;
+  position: relative;
+  background: #2A8CE5;
+}
+.search image {
+  width: 40rpx;
+  height: 40rpx;
+  position: absolute;
+  left: 30rpx;
+  top: 20px;
+}
+.search input{
+  display: inline-block;
+  background: #4EA3E7;
+  border-radius: 5px;
+  padding-left: 60rpx;
+  width: 90%;
+  height: 80rpx;
+  font-size: 26rpx;
+  color: #fff;
+  margin-top: 10rpx;
+}
+.search-placeholder{
+  color: #8CCEFD;
+  line-height: 20rpx;
+}
+
+/* add by dkvirus: 添加下拉框样式 */
+.search .select-stops {
+  font-size: 30rpx; 
+  background: #4EA3E7;
+  color: #fff;
+  padding: 20rpx; 
+  position: relative; 
+  border-radius: 10rpx;
+  z-index: 100; 
+  width: 90%;
+  max-height: 400rpx; 
+  overflow: auto;
+}
+.search .select-stop-item {
+  border-bottom: 1px solid #fff; 
+  padding: 20rpx;
+}
+.search .select-stop-item:last-child {
+  border-bottom: none;
+}
+.search .select-show {
+  display: block;
+}
+.search .select-hide {
+  display: none;
+}
+/* end */
