@@ -112,6 +112,9 @@
   height: 100%;
   padding-left: 40rpx;
   color: #888;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .stop .item .active-name {
   color: #2A8CE5!important;
